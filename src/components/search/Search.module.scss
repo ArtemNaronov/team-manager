@@ -1,0 +1,371 @@
+/* Основной контейнер поиска */
+.searchContainer {
+  position: relative;
+  z-index: 1000;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Поле ввода поиска */
+.searchInput {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1), 0 2px 8px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &:focus-within {
+    border-color: rgba(59, 130, 246, 0.3);
+    box-shadow: 0 12px 40px rgba(59, 130, 246, 0.15),
+      0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.inputWrapper {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  gap: 0.75rem;
+}
+
+.searchIcon {
+  font-size: 1.25rem;
+  color: rgba(107, 114, 128, 0.8);
+  flex-shrink: 0;
+}
+
+.input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-size: 1rem;
+  color: #1f2937;
+  outline: none;
+
+  &::placeholder {
+    color: rgba(107, 114, 128, 0.6);
+  }
+}
+
+.clearButton {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: rgba(107, 114, 128, 0.6);
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+
+  &:hover {
+    color: #ef4444;
+    background: rgba(239, 68, 68, 0.1);
+  }
+}
+
+/* Фильтры */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: rgba(249, 250, 251, 0.8);
+  border-top: 1px solid rgba(229, 231, 235, 0.5);
+}
+
+.filterLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: rgba(59, 130, 246, 0.1);
+  }
+}
+
+.filterCheckbox {
+  margin: 0;
+  accent-color: #3b82f6;
+}
+
+.filterText {
+  color: #4b5563;
+  font-weight: 500;
+  user-select: none;
+}
+
+/* Результаты поиска */
+.searchResults {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  box-shadow: 0 20px 64px rgba(0, 0, 0, 0.15), 0 8px 24px rgba(0, 0, 0, 0.1);
+  margin-top: 0.5rem;
+  max-height: 400px;
+  overflow: hidden;
+  z-index: 1001;
+}
+
+.resultsHeader {
+  padding: 0.75rem 1rem;
+  background: rgba(249, 250, 251, 0.8);
+  border-bottom: 1px solid rgba(229, 231, 235, 0.5);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #6b7280;
+}
+
+.resultsList {
+  max-height: 320px;
+  overflow-y: auto;
+
+  /* Кастомный скроллбар */
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(156, 163, 175, 0.3);
+    border-radius: 3px;
+
+    &:hover {
+      background: rgba(156, 163, 175, 0.5);
+    }
+  }
+}
+
+.resultItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-bottom: 1px solid rgba(229, 231, 235, 0.3);
+
+  &:hover {
+    background: rgba(59, 130, 246, 0.05);
+    border-color: rgba(59, 130, 246, 0.1);
+  }
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.resultIcon {
+  font-size: 1.25rem;
+  flex-shrink: 0;
+  margin-top: 0.125rem;
+}
+
+.resultContent {
+  flex: 1;
+  min-width: 0;
+}
+
+.resultTitle {
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 0.25rem;
+  line-height: 1.4;
+}
+
+.resultDescription {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin-bottom: 0.25rem;
+  line-height: 1.4;
+}
+
+.resultMeta {
+  font-size: 0.75rem;
+  color: #9ca3af;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Подсветка совпадений */
+.highlight {
+  background: linear-gradient(120deg, #fbbf24 0%, #f59e0b 100%);
+  color: #92400e;
+  padding: 0.125rem 0.25rem;
+  border-radius: 3px;
+  font-weight: 600;
+}
+
+/* Состояние "ничего не найдено" */
+.noResults {
+  padding: 2rem 1rem;
+  text-align: center;
+  color: #6b7280;
+}
+
+.noResultsIcon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  opacity: 0.5;
+}
+
+.noResultsText {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #4b5563;
+}
+
+.noResultsHint {
+  font-size: 0.875rem;
+  color: #9ca3af;
+}
+
+/* Overlay для закрытия поиска */
+.searchOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 999;
+  background: transparent;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .searchContainer {
+    max-width: 100%;
+  }
+
+  .filters {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .filterLabel {
+    padding: 0.5rem;
+    justify-content: flex-start;
+  }
+
+  .searchResults {
+    max-height: 300px;
+  }
+
+  .resultsList {
+    max-height: 220px;
+  }
+
+  .resultItem {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .inputWrapper {
+    padding: 0.5rem 0.75rem;
+  }
+
+  .filters {
+    padding: 0.5rem 0.75rem;
+  }
+
+  .searchResults {
+    margin-top: 0.25rem;
+    max-height: 250px;
+  }
+
+  .resultsList {
+    max-height: 170px;
+  }
+}
+
+/* Анимации */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.searchResults {
+  animation: fadeInUp 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Темная тема (если понадобится) */
+@media (prefers-color-scheme: dark) {
+  .searchInput {
+    background: rgba(31, 41, 55, 0.95);
+    border-color: rgba(75, 85, 99, 0.3);
+  }
+
+  .input {
+    color: #f9fafb;
+
+    &::placeholder {
+      color: rgba(156, 163, 175, 0.6);
+    }
+  }
+
+  .filters {
+    background: rgba(17, 24, 39, 0.8);
+    border-color: rgba(75, 85, 99, 0.3);
+  }
+
+  .filterText {
+    color: #d1d5db;
+  }
+
+  .searchResults {
+    background: rgba(31, 41, 55, 0.98);
+    border-color: rgba(75, 85, 99, 0.3);
+  }
+
+  .resultsHeader {
+    background: rgba(17, 24, 39, 0.8);
+    border-color: rgba(75, 85, 99, 0.3);
+    color: #9ca3af;
+  }
+
+  .resultItem {
+    border-color: rgba(75, 85, 99, 0.2);
+
+    &:hover {
+      background: rgba(59, 130, 246, 0.1);
+    }
+  }
+
+  .resultTitle {
+    color: #f9fafb;
+  }
+
+  .resultDescription {
+    color: #d1d5db;
+  }
+
+  .highlight {
+    background: linear-gradient(120deg, #f59e0b 0%, #d97706 100%);
+    color: #fbbf24;
+  }
+}
+
