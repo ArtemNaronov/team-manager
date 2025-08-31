@@ -100,15 +100,27 @@ const ProjectViewer = () => {
   );
 
   const filteredTasks = useMemo(() => {
-    return selectedEmployee && selectedProject
-      ? sortTasksByDeadline(
-          tasks.filter(
-            (task) =>
-              task.employeeIds.includes(selectedEmployee.id) &&
-              task.projectId === selectedProject.id
-          )
+    if (!selectedEmployee) return [];
+
+    // Если выбран и сотрудник, и проект - показываем задачи для конкретного проекта
+    if (selectedEmployee && selectedProject) {
+      return sortTasksByDeadline(
+        tasks.filter(
+          (task) =>
+            task.employeeIds.includes(selectedEmployee.id) &&
+            task.projectId === selectedProject.id
         )
-      : [];
+      );
+    }
+
+    // Если выбран только сотрудник - показываем все его задачи
+    if (selectedEmployee) {
+      return sortTasksByDeadline(
+        tasks.filter((task) => task.employeeIds.includes(selectedEmployee.id))
+      );
+    }
+
+    return [];
   }, [tasks, selectedEmployee, selectedProject]);
 
   const addProject = async (formData: {
@@ -1127,26 +1139,24 @@ const ProjectViewer = () => {
         />
       </ExpandableBlock>
 
-      {filteredEmployees.length > 0 && (
-        <ExpandableBlock
-          id="employees"
-          isExpanded={expandedBlock === "employees"}
-          onToggle={toggleBlockExpansion}
-        >
-          <EmployeeList
-            employees={filteredEmployees}
-            tasks={tasks}
-            projects={projects}
-            selectedProject={selectedProject}
-            selectedEmployee={selectedEmployee}
-            onSelect={handleEmployeeClick}
-            onEdit={editEmployee}
-            onDelete={removeEmployeeFromProject}
-            onAdd={addEmployee}
-            onReassignTask={addEmployeeToTask}
-          />
-        </ExpandableBlock>
-      )}
+      <ExpandableBlock
+        id="employees"
+        isExpanded={expandedBlock === "employees"}
+        onToggle={toggleBlockExpansion}
+      >
+        <EmployeeList
+          employees={filteredEmployees}
+          tasks={tasks}
+          projects={projects}
+          selectedProject={selectedProject}
+          selectedEmployee={selectedEmployee}
+          onSelect={handleEmployeeClick}
+          onEdit={editEmployee}
+          onDelete={removeEmployeeFromProject}
+          onAdd={addEmployee}
+          onReassignTask={addEmployeeToTask}
+        />
+      </ExpandableBlock>
 
       {selectedProject && (
         <ExpandableBlock
@@ -1163,7 +1173,7 @@ const ProjectViewer = () => {
         </ExpandableBlock>
       )}
 
-      {filteredTasks.length > 0 && (
+      {selectedEmployee && (
         <ExpandableBlock
           id="tasks"
           isExpanded={expandedBlock === "tasks"}

@@ -2,9 +2,9 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
 // https://vite.dev/config/
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   plugins: [react()],
-  base: "/team-manager/",
+  base: mode === "production" ? "/team-manager/" : "/",
   build: {
     outDir: "dist",
     assetsDir: "assets",
@@ -26,4 +26,4 @@ export default defineConfig({
     port: 4173,
     host: true,
   },
-});
+}));

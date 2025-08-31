@@ -1,13 +1,14 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import MainLayout from './layouts/MainLayout';
+import MainLayout from "./layouts/MainLayout";
 import Home from "./pages/Home";
-import './App.css'
-import './styles/global.scss'
+import "./App.css";
+import "./styles/global.scss";
 
 function App() {
   // Получаем базовый путь для GitHub Pages
-  const basename = import.meta.env.PROD ? '/team-manager' : '';
-  
+  // В development режиме basename должен быть пустым
+  const basename = import.meta.env.MODE === "production" ? "/team-manager" : "";
+
   return (
     <Router basename={basename}>
       <Routes>
@@ -19,4 +20,4 @@ function App() {
   );
 }
 
-export default App
+export default App;
