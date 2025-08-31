@@ -1,15 +1,12 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import MainLayout from './layouts/MainLayout';
 import Home from "./pages/Home";
 import './App.css'
 import './styles/global.scss'
 
 function App() {
-  // Получаем базовый путь для GitHub Pages
-  const basename = import.meta.env.PROD ? '/team-manager' : '';
-  
   return (
-    <Router basename={basename}>
+    <Router>
       <Routes>
         <Route element={<MainLayout />}>
           <Route path="/" element={<Home />} />
