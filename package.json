@@ -1,7 +1,8 @@
 {
   "name": "team-manager",
-  "private": true,
-  "version": "0.0.0",
+  "private": false,
+  "version": "1.0.0",
+  "homepage": "https://yourusername.github.io/team-manager",
   "type": "module",
   "scripts": {
     "dev": "vite",
