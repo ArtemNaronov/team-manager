@@ -1,6 +1,7 @@
 import { useState, useRef } from "react";
 import DataModal from "../modal/Modal";
 import SubTaskForm from "../form/SubTaskForm";
+import Icon from "../Icon";
 import style from "../TeamWorks.module.scss";
 
 import type { Task, Subtask } from "../../types/projectTypes";
@@ -176,17 +177,7 @@ const SubTaskList = ({
                 ref={dragRef}
               >
                 <div className={style.drag_handle}>
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                  >
-                    <circle cx="8" cy="8" r="1" />
-                    <circle cx="16" cy="8" r="1" />
-                    <circle cx="8" cy="16" r="1" />
-                    <circle cx="16" cy="16" r="1" />
-                  </svg>
+                  <Icon name="status" size={16} />
                 </div>
 
                 <div className={`${style["projects__column__item--task"]}`}>
@@ -209,32 +200,14 @@ const SubTaskList = ({
                       rel="noopener noreferrer"
                       className={style.task_link}
                     >
-                      <svg
-                        width="14"
-                        height="14"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                      >
-                        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
-                        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
-                      </svg>
+                      <Icon name="documentation" size={14} />
                       Ссылка
                     </a>
                   )}
 
                   <div className={style.task_footer}>
                     <div className={style.deadline_info}>
-                      <svg
-                        width="14"
-                        height="14"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                      >
-                        <circle cx="12" cy="12" r="10" />
-                        <polyline points="12,6 12,12 16,14" />
-                      </svg>
+                      <Icon name="calendar" size={14} />
                       <span
                         className={
                           isOverdue(subtask.deadline, subtask.status)
@@ -290,19 +263,7 @@ const SubTaskList = ({
                     title="Редактировать подзадачу"
                     className={`${style.task_action} ${style["task_action--edit"]}`}
                   >
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
-                      <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
-                    </svg>
+                    <Icon name="edit" size={16} />
                     <span>Редактировать</span>
                   </button>
                   <button
@@ -310,22 +271,7 @@ const SubTaskList = ({
                     title="Удалить подзадачу"
                     className={`${style.task_action} ${style["task_action--delete"]}`}
                   >
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <polyline points="3 6 5 6 21 6" />
-                      <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
-                      <path d="M10 11v6" />
-                      <path d="M14 11v6" />
-                      <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2" />
-                    </svg>
+                    <Icon name="delete" size={16} />
                     <span>Удалить</span>
                   </button>
                 </div>
@@ -339,7 +285,8 @@ const SubTaskList = ({
         onClick={handleOpenAdd}
         className={`${style.projects__column__item} ${style["projects__column__item--btn"]}`}
       >
-        + Добавить подзадачу
+        <Icon name="plus" size={20} />
+        Добавить подзадачу
       </button>
 
       <DataModal

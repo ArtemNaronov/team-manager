@@ -213,8 +213,6 @@ $status-overdue: #ef4444;
         height: fit-content;
         min-height: 200px;
         display: flex;
-        flex-direction: column;
-        justify-content: space-between;
       }
     }
 
@@ -397,6 +395,9 @@ $status-overdue: #ef4444;
         color: rgba(59, 130, 246, 0.8);
         cursor: pointer;
         font-weight: 600;
+        display: flex;
+        flex-direction: row;
+        gap: 0.5rem;
         text-align: center;
         align-items: center;
         justify-content: center;
@@ -404,6 +405,7 @@ $status-overdue: #ef4444;
         min-height: auto !important; // Переопределяем min-height для кнопок
         height: auto !important; // Переопределяем height для кнопок
         padding: 1rem 1.5rem; // Добавляем padding для адекватного размера
+        margin-top: 1rem;
 
         &:hover {
           background: rgba(59, 130, 246, 0.1);
@@ -751,7 +753,6 @@ $status-overdue: #ef4444;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 0.75rem;
   gap: 0.75rem;
 }
 
@@ -1206,6 +1207,11 @@ $status-overdue: #ef4444;
   z-index: 1001;
 }
 
+/* Стили для отображения статуса задач */
+.task_status {
+  margin: 0.5rem 0;
+}
+
 /* Стили для отображения исполнителей задач */
 .task_assignees {
   margin-top: 8px;
@@ -1557,4 +1563,50 @@ $status-overdue: #ef4444;
   flex: 0 0 20px;
   fill: currentColor;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+// Status Badge Styles
+.status_badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.status_icon {
+  font-size: 0.75rem;
+  line-height: 1;
+}
+
+.status_text {
+  line-height: 1;
+}
+
+.status_completed {
+  background-color: #dcfce7;
+  color: #166534;
+  border-color: #bbf7d0;
+}
+
+.status_in_progress {
+  background-color: #dbeafe;
+  color: #1e40af;
+  border-color: #93c5fd;
+}
+
+.status_pending {
+  background-color: #fef3c7;
+  color: #92400e;
+  border-color: #fde68a;
+}
+
+.status_default {
+  background-color: #f3f4f6;
+  color: #374151;
+  border-color: #d1d5db;
 }

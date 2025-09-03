@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import style from "./ProjectForm.module.scss";
 import type { Employee } from "../../types/projectTypes";
 
@@ -15,12 +15,48 @@ const ProjectForm = ({ onSubmit, employees, initialData = null }: Props) => {
     initialData?.employeeId || []
   );
   const [showDropdown, setShowDropdown] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const filteredEmployees = employees.filter(
     (e) =>
       e.name.toLowerCase().includes(search.toLowerCase()) ||
       e.position.toLowerCase().includes(search.toLowerCase())
   );
+
+  const positionDropdown = (inputElement: HTMLInputElement) => {
+    const rect = inputElement.getBoundingClientRect();
+    const dropdown = document.querySelector(
+      `.${style.dropdown}`
+    ) as HTMLElement;
+    if (dropdown) {
+      dropdown.style.top = `${rect.bottom + 5}px`;
+      dropdown.style.left = `${rect.left}px`;
+      dropdown.style.width = `${rect.width}px`;
+    }
+  };
+
+  // Обработчик клика вне dropdown
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node) &&
+        inputRef.current &&
+        !inputRef.current.contains(event.target as Node)
+      ) {
+        setShowDropdown(false);
+      }
+    };
+
+    if (showDropdown) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showDropdown]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -56,16 +92,20 @@ const ProjectForm = ({ onSubmit, employees, initialData = null }: Props) => {
         <div className={`${style.field} ${style["has-dropdown"]}`}>
           <label className={style.label}>Назначить сотрудника</label>
           <input
+            ref={inputRef}
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            onFocus={() => setShowDropdown(true)}
-            onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
+            onFocus={(e) => {
+              setShowDropdown(true);
+              // Позиционируем dropdown после рендера
+              setTimeout(() => positionDropdown(e.target), 0);
+            }}
             placeholder="Поиск по имени..."
             className={style.input}
           />
           {showDropdown && (
-            <div className={style.dropdown}>
+            <div ref={dropdownRef} className={style.dropdown}>
               {filteredEmployees.length > 0 ? (
                 filteredEmployees.map((emp) => (
                   <div

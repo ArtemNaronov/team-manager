@@ -1,10 +1,11 @@
 import { useState } from "react";
 import DataModal from "../modal/Modal";
 import TaskForm from "../form/TaskForm";
+import Icon from "../Icon";
+import StatusBadge from "../StatusBadge";
 import style from "../TeamWorks.module.scss";
 
 import type { Task, Employee } from "../../types/projectTypes";
-import { TASK_STATUS_LABELS } from "../../types/projectTypes";
 import { formatDate, isOverdue } from "../../utils/dateUtils";
 
 interface Props {
@@ -117,12 +118,9 @@ const TaskList = ({
               <p className={isOverdue(task.deadline) ? style.overdue : ""}>
                 Крайний срок: {formatDate(task.deadline)}
               </p>
-              <p>
-                Статус:{" "}
-                {TASK_STATUS_LABELS[
-                  task.status as keyof typeof TASK_STATUS_LABELS
-                ] || task.status}
-              </p>
+              <div className={style.task_status}>
+                <StatusBadge status={task.status} />
+              </div>
               <div className={style.task_assignees}>
                 <strong>Исполнители:</strong>
                 <div className={style.assignees_list}>
@@ -146,20 +144,7 @@ const TaskList = ({
             </div>
             <div className={`${style.projects__column__item__controll}`}>
               <button onClick={() => handleOpenEdit(task)}>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="feather feather-edit"
-                >
-                  <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
-                  <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
-                </svg>
+                <Icon name="edit" size={24} />
               </button>
               <button
                 onClick={(e) => {
@@ -185,21 +170,7 @@ const TaskList = ({
                     : ""
                 }
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="feather feather-log-out"
-                >
-                  <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
-                  <polyline points="16 17 21 12 16 7" />
-                  <line x1="21" y1="12" x2="9" y2="12" />
-                </svg>
+                <Icon name="delete" size={24} />
               </button>
             </div>
           </div>
@@ -210,7 +181,8 @@ const TaskList = ({
         onClick={handleOpenAdd}
         className={`${style.projects__column__item} ${style["projects__column__item--btn"]}`}
       >
-        + Добавить задачу
+        <Icon name="plus" size={20} />
+        Добавить задачу
       </button>
 
       <DataModal
